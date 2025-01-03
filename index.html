@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text <-> Speech Converter</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Selection Box -->
+  <div class="container" id="main-container">
+    <div class="selection-box">
+      <div class="box" onclick="showSection('text-to-speech')"><h3>Text to Speech</h3></div>
+      <div class="box" onclick="showSection('speech-to-text')"><h3>Speech to Text</h3></div>
+    </div>
+  </div>
+
+  <!-- Text to Speech Section -->
+  <div class="text-to-speech" id="text-to-speech">
+    <h1>Text To Speech <span>Converter</span></h1>
+
+    <div class="search-text">
+      <textarea placeholder="Type Your Text Here..."></textarea>
+    </div>
+
+    <div class="languages">
+      <select></select>
+      <button>Listen</button>
+    </div>
+  </div>
+
+  <!-- Speech to Text Section -->
+  <div class="speech-to-text" id="speech-to-text">
+    <h1>Speech To Text <span> Converter</span></h1>
+
+    <div class="search-speech">
+      <textarea placeholder="Recorded Voice Text..."></textarea>
+    </div>
+
+    <div class="Texts">
+      <button onclick="SpeechRecord()">Record</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
+
