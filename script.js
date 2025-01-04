@@ -46,14 +46,17 @@ function populateSpeechLanguages() {
   const languageSelector = document.querySelector(".speech-to-text select");
   const languages = [
     { code: "en-US", name: "English (United States)" },
-    { code: "es-ES", name: "Spanish (Spain)" },
-    { code: "fr-FR", name: "French (France)" },
-    { code: "de-DE", name: "German (Germany)" },
-    { code: "zh-CN", name: "Chinese (Mandarin)" },
-    { code: "hi-IN", name: "Hindi (India)" },
-    { code: "ja-JP", name: "Japanese" },
+    { code: "ml-IN", name: "Malayalam" },
+    { code: "ur-IN", name: "Urdu" },
+    { code: "gu-IN", name: "Gujarati" },
+    { code: "mr-IN", name: "Marathi" },
+    { code: "hi-IN", name: "Hindi" },
+    { code: "bn-IN", name: "Bengali" },
+    { code: "kn-IN", name: "Kannada" },
+    { code: "te-IN", name: "Telugu" },
     // Add more languages as needed
   ];
+
 
   languages.forEach((lang) => {
     const option = document.createElement("option");
