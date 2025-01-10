@@ -1,98 +1,206 @@
-// Function to show the appropriate section
-function showSection(sectionId) {
-  document.getElementById('main-container').style.display = 'none';
-  document.getElementById(sectionId).style.display = 'flex';
+let text2speech = document.querySelector("#main-container")
+
+// To Select Sections
+function showSection(classID) {
+    const id = classID
+    text2speech.style.display = "none"
+    document.getElementById(classID).style.display = "flex"
 }
 
-// Speech To Text with Language Selection
-function SpeechRecord() {
-  const speech = window.SpeechRecognition || webkitSpeechRecognition
-  if (!speech) {
-    alert("Speech Recognition not supported in this browser.");
-    return;
-  }
-  const speechrecord = new speech()
-
-  const result = document.querySelector(".search-speech textarea")
-  const chk = document.querySelector(".Texts select")
-
-  speechrecord.interimResults = false
-  speechrecord.lang = chk.value
-
-  speechrecord.onstart = function () {
-    result.value = "Listining...."
-  }
-
-  speechrecord.onspeechend = function () {
-    speechrecord.stop()
-  }
-
-  speechrecord.onresult = function (event) {
-    const text = event.results[0][0].transcript
-    result.value = text
-    console.log(result)
-  }
-
-  speechrecord.onerror = function (event) {
-    console.log("Error : " + event.error + ".")
-  };
-
-  speechrecord.start()
-}
-
-
-// Populate language options for Speech to Text
-function populateSpeechLanguages() {
-  const languageSelector = document.querySelector(".speech-to-text select");
-  const languages = [
-    { code: "en-US", name: "English (United States)" },
-    { code: "ml-IN", name: "Malayalam" },
-    { code: "ur-IN", name: "Urdu" },
-    { code: "gu-IN", name: "Gujarati" },
-    { code: "mr-IN", name: "Marathi" },
-    { code: "hi-IN", name: "Hindi" },
-    { code: "bn-IN", name: "Bengali" },
-    { code: "kn-IN", name: "Kannada" },
-    { code: "te-IN", name: "Telugu" },
-    // Add more languages as needed
-  ];
-
-
-  languages.forEach((lang) => {
-    const option = document.createElement("option");
-    option.value = lang.code;
-    option.textContent = lang.name;
-    languageSelector.appendChild(option);
-  });
-}
-
-// Text To Speech Functionality
+////////////////////////////////////////////////////// TEXT TO SPEECH //////////////////////////////////////////////
 let speech = new SpeechSynthesisUtterance();
-const selectedVoice = document.querySelector(".languages select");
-let voices = [];
+let selectVoice = document.querySelector(".languages  select")
+let voicelist = []
 
-window.speechSynthesis.onvoiceschanged = () => {
-  voices = window.speechSynthesis.getVoices();
-  selectedVoice.innerHTML = '';
-  voices.forEach((voice) => {
-    selectedVoice.innerHTML += `<option>${voice.name}</option>`;
-  });
-};
+// Adding Voices To App
+// We can use multiple listeners by this
+window.speechSynthesis.addEventListener("voiceschanged", () => {
+    voicelist = window.speechSynthesis.getVoices();
+    selectVoice.innerHTML = '';
+    voicelist.forEach((voice) => {
+        selectVoice.innerHTML += `<option>${voice.name}</option>`;
+    });
+});
 
-selectedVoice.addEventListener("change", () => {
-  const selectedName = selectedVoice.value;
-  for (let i = 0; i < voices.length; i++) {
-    if (voices[i].name === selectedName) {
-      speech.voice = voices[i];
-      break;
+
+// Selecting voice from select bar)
+selectVoice.addEventListener("change", () => {
+    const selectname = selectVoice.value
+    for (let i = 0; i < voicelist.length; i++) {
+        if (voicelist[i].name === selectname) {
+            speech.voice = voicelist[i];
+            break;
+        }
     }
-  }
-});
+})
 
+// Speak Voice 
 document.querySelector(".languages button").addEventListener("click", () => {
-  speech.text = document.querySelector(".search-text textarea").value;
-  window.speechSynthesis.speak(speech);
-});
+    speech.text = document.querySelector(".search-text textarea").value
+    window.speechSynthesis.speak(speech)
+})
 
-// Initialize language options on page load
-populateSpeechLanguages();
+
+////////////////////////////////////////////// SPEECH TO TEXT//////////////////////////////////////
+let selectedlanguage = document.querySelector(".Texts select")
+function populateSpeechLanguages() {
+    const lang = [
+        { code: "en-US", name: "English (United States)" },
+        { code: "ml-IN", name: "Malayalam" },
+        { code: "ur-IN", name: "Urdu" },
+        { code: "gu-IN", name: "Gujarati" },
+        { code: "mr-IN", name: "Marathi" },
+        { code: "hi-IN", name: "Hindi" },
+        { code: "bn-IN", name: "Bengali" },
+        { code: "kn-IN", name: "Kannada" },
+        { code: "te-IN", name: "Telugu" },
+        // Add more languages as needed
+    ]
+
+    lang.forEach((lang) => {
+        const option = document.createElement("option")
+        option.value = lang.code
+        option.innerText = lang.name
+        selectedlanguage.appendChild(option)
+    })
+
+}
+
+let recordbutton = document.querySelector(".Texts button")
+let recordText = document.querySelector(".search-speech textarea")
+recordbutton.addEventListener("click", () => {
+    const listen = window.SpeechRecognition || webkitSpeechRecognition
+    let interval;
+    if (!listen) {
+        alert("Speech Recognition Not Supported in This Browser!!!")
+        return
+    }
+
+    const recognition = new listen()
+
+    recognition.lang = selectedlanguage.value
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+        recordText.value = "Listining"
+        interval = setInterval(() => {
+            if(recordText.value === `Listining....`){
+                recordText.value = `Listining`
+            }
+            recordText.value += `.` 
+        }, 500);
+    }
+
+    recognition.onspeechend = () => {
+        clearInterval(interval)
+        recognition.stop()
+    }
+
+    recognition.onresult = (event) => {
+        clearInterval(interval)
+        const textval = event.results[0][0].transcript
+        recordText.value = textval;
+    }
+
+    recognition.onerror = (event) => {
+        clearInterval(interval)
+        console.log("Error : " + event.error + ".")
+    };
+
+    recognition.start()
+})
+
+populateSpeechLanguages()
+
+
+// Back Button Functionality
+let text = document.querySelector(".search-text textarea")
+let back = document.querySelector(".back")
+let t2s = document.querySelector(".text-to-speech")
+let s2t = document.querySelector(".speech-to-text")
+back.addEventListener("click", ()=>{
+    if(t2s.style.display === "flex") 
+        s2t.style.display === "none"
+    else 
+        t2s.style.display === "none"
+    text2speech.style.display = "flex"
+
+    text.value = ''
+    recordText.value = ''
+})
+
+
+
+
+
+
+
+/*
+let text2speech = document.querySelector("#main-container")
+
+// To Select Sections
+function showSection(classID) {
+    text2speech.style.display = "none"
+    document.getElementById(classID).style.display = "flex"
+}
+
+// Text To Speech
+let speech = new SpeechSynthesisUtterance();
+let selectVoice = document.querySelector(".languages  select")
+let voicelist = []
+
+
+// Adding Voices To App
+// We can use only one time by this if uses later same fucntion then that will run not this
+window.speechSynthesis.onvoiceschanged = () =>{
+    voicelist = window.speechSynthesis.getVoices();
+    selectVoice.innerHTML = ''
+    voicelist.forEach((voice) => {
+        selectVoice.innerHTML += `<option>${voice.name}</option>`
+    })
+// }
+
+// Selecting voice from select bar)
+selectVoice.addEventListener("change", ()=>{
+    const selectname =  selectVoice.value
+    for(let i = 0; i < voicelist.length; i++){
+        if(voicelist[i].name === selectname) {
+            speech.voice = voicelist[i];
+            break;
+        }
+    }    
+})
+
+// Speak Voice 
+document.querySelector(".languages button").addEventListener("click", ()=>{
+    speech.text = document.querySelector(".search-text textarea").value
+    window.speechSynthesis.speak(speech)
+})
+
+
+
+async function getvoices() {
+    return new Promise((resolve) => {
+        if (window.speechSynthesis.getVoices().length !== 0) {
+            resolve(window.speechSynthesis.getVoices())
+        }
+        else {
+            window.speechSynthesis.onvoiceschanged = () => {
+                resolve(window.speechSynthesis.getVoices())
+            };
+        }
+    })
+}
+
+async function voiceload() {
+    voicelist = await getvoices();
+    voicelist.forEach((voice) => {
+        selectVoice.innerHTML = '';
+        voicelist.forEach((voice) => {
+            selectVoice.innerHTML += `<option>${voice.name}</option>`;
+        })
+    })
+}
+
+voiceload()
+*/

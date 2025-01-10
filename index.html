@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Text <-> Speech Converter</title>
+  <title>Text & Speech Converter</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -30,6 +30,8 @@
       <select></select>
       <button>Listen</button>
     </div>
+
+    <button class="back">Back</button>
   </div>
 
   <!-- Speech to Text Section -->
@@ -37,13 +39,15 @@
     <h1>Speech To Text <span> Converter</span></h1>
 
     <div class="search-speech">
-      <textarea placeholder="Recorded Voice Text..."></textarea>
+      <textarea disabled placeholder="Recorded Voice Text..." ></textarea>
     </div>
 
     <div class="Texts">
       <select></select>
-      <button onclick="SpeechRecord()">Record</button>
+      <button >Record</button> <!-- onclick="SpeechRecord()" -->
     </div>
+
+    <button class="back">Back</button>
   </div>
 
   <script src="script.js"></script>

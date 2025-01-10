@@ -1,3 +1,10 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+
 body,
 html {
   height: 100%;
@@ -139,6 +146,27 @@ h1 span {
   transform: translateY(-2px);
 }
 
+.back {
+  border: none;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to right, #70e1f5, #ffd194);
+  margin-top: 2rem;
+  border-radius: 10px;
+  height: 2.5rem;
+  width: 5rem;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.back:hover{
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+
+
 @media (max-width: 768px) {
   h1 {
     font-size: 2.5rem;
@@ -204,6 +232,7 @@ h1 span {
 }
 
 .search-speech textarea {
+  background-color: white;
   padding: 15px;
   border-radius: 12px;
   width: 100%;
@@ -224,7 +253,7 @@ h1 span {
   width: 100%;
   max-width: 510px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   column-gap: 10px;
 }
