@@ -115,19 +115,26 @@ populateSpeechLanguages()
 
 // Back Button Functionality
 let text = document.querySelector(".search-text textarea")
-let back = document.querySelector(".back")
-let t2s = document.querySelector(".text-to-speech")
-let s2t = document.querySelector(".speech-to-text")
-back.addEventListener("click", ()=>{
-    if(t2s.style.display === "flex") 
-        s2t.style.display === "none"
-    else 
-        t2s.style.display === "none"
-    text2speech.style.display = "flex"
+let back = document.querySelectorAll(".back")
+let t2s = document.querySelector("#text-to-speech")
+let s2t = document.querySelector("#speech-to-text")
 
-    text.value = ''
-    recordText.value = ''
-})
+back.forEach((button) => {
+    button.addEventListener("click", () => {
+        // Show the main container and hide both sections
+        text2speech.style.display = "flex";
+        t2s.style.display = "none";
+        s2t.style.display = "none";
+
+        // Reset textarea contents when going back
+        if (t2s.style.display === "none") {
+            text.value = ''; // clear text in Text to Speech textarea
+        } 
+        if (s2t.style.display === "none") {
+            recordText.value = ''; // clear text in Speech to Text textarea
+        }
+    });
+});
 
 
 

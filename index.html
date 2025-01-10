@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,12 +8,17 @@
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <!-- Selection Box -->
   <div class="container" id="main-container">
     <div class="selection-box">
-      <div class="box" onclick="showSection('text-to-speech')"><h3>Text to Speech</h3></div>
-      <div class="box" onclick="showSection('speech-to-text')"><h3>Speech to Text</h3></div>
+      <div class="box" onclick="showSection('text-to-speech')">
+        <h3>Text to Speech</h3>
+      </div>
+      <div class="box" onclick="showSection('speech-to-text')">
+        <h3>Speech to Text</h3>
+      </div>
     </div>
   </div>
 
@@ -39,20 +43,18 @@
     <h1>Speech To Text <span> Converter</span></h1>
 
     <div class="search-speech">
-      <textarea disabled placeholder="Recorded Voice Text..." ></textarea>
+      <textarea disabled placeholder="Recorded Voice Text..."></textarea>
     </div>
 
     <div class="Texts">
       <select></select>
-      <button >Record</button> <!-- onclick="SpeechRecord()" -->
+      <button>Record</button> <!-- onclick="SpeechRecord()" -->
     </div>
 
     <button class="back">Back</button>
   </div>
 
   <script src="script.js"></script>
-
 </body>
 
 </html>
-
